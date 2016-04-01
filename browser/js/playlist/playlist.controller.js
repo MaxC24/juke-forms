@@ -2,7 +2,7 @@
 
 juke.controller('PlaylistCtrl', function (SongFactory, $scope, PlaylistFactory, eachPlaylist) {
 
-	//$scope.playlist.songs = [];
+	$scope.playlist = eachPlaylist;
 
 	SongFactory.fetchAllSongs()
 	.then(function(songs){
@@ -16,6 +16,5 @@ juke.controller('PlaylistCtrl', function (SongFactory, $scope, PlaylistFactory, 
 
 
 
-	$scope.playlist = eachPlaylist;
 	console.log($scope.playlist);
 });
