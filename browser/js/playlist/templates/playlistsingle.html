@@ -1,0 +1,52 @@
+<div>
+  <h3>{{ playlist.name }}</h3>
+  <table class='table' ng-show="playlist.songs.length">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Artists</th>
+        <th>Genres</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="song in playlist.songs" ng-class="{active: song === getCurrentSong() }">
+        <td>
+          <button class="btn btn-default btn-xs" ng-click="toggle(song)">
+            <span class="glyphicon" ng-class="{ 'glyphicon-pause': isPlaying(song), 'glyphicon-play': !isPlaying(song) }"></span>
+          </button>
+        </td>
+        <td>{{ song.name }}</td>
+        <td><span ng-repeat="artist in song.artists">{{ artist.name }}{{ $last ? '' : ', ' }}</span></td>
+        <td>{{ song.genres.join(', ') }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <small ng-hide="playlist.songs.length">No songs.</small>
+  <hr>
+</div>
+
+<form name="songForm" class="form-horizontal">
+    <fieldset>
+      <legend>Add Song</legend>
+      <div ng-show="empty" class="alert alert-warning">Please enter a song</div>
+      <div class="form-group">
+        <label class="col-xs-2 control-label">Title</label>
+        <div class="col-xs-10">
+          <select
+            ng-options="song as song.name for song in songs"
+            name="songField"
+            ng-model="song"
+            required
+            class="form-control" type="select">
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-10 col-xs-offset-2">
+          <button ng-click="addSong(songName)" ng-disabled="songForm.songField.$invalid || songForm.songField.$pristine" type="submit" class="btn btn-success">Add Song</button>
+        </div>
+        <p>This is what you entered: {{song}}</p>
+      </div>
+    </fieldset>
+  </form>
